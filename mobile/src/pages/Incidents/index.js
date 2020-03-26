@@ -12,6 +12,7 @@ import styles from "./styles";
 export default function Incidents() {
   const navigation = useNavigation();
   const [incidents, setIncidents] = useState([]);
+  const [total, setTotal] = useState(0);
 
   function navigateToDetail() {
     navigation.navigate("Detail");
@@ -21,6 +22,7 @@ export default function Incidents() {
     const response = await api.get("incidents");
 
     setIncidents(response.data);
+    setTotal(response.headers["x-total-count"]);
   }
 
   useEffect(() => {
@@ -31,7 +33,7 @@ export default function Incidents() {
       <View style={styles.header}>
         <Image source={logoImg} />
         <Text style={styles.headerText}>
-          Total de <Text style={styles.headerTextBold}>0 casos.</Text>
+          Total de <Text style={styles.headerTextBold}>{total} casos.</Text>
         </Text>
       </View>
 
